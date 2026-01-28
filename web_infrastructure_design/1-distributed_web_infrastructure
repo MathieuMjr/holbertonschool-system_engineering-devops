@@ -1,0 +1,8 @@
+In this architecture, the IP solved by the DNS is the load-balancer's IP. 
+The proxy is in charge of balancing the traffic between two active nodes thanks to the Round Robin algorithm, each containing a web server, an application server, and the code files. 
+
+Each node can communicate with the master DB server. This server is able to write and read data, but a second server, the Replica DB, is synchronized with the master DB but is read-only. 
+
+Proxy is a weak point of the architecture since all nodes rely on it. 
+In this architecture, data are replicated, which is safer. 
+There is a lack of security with no HTTPS connection or firewall protecting unauthorized connections to the proxy. 
