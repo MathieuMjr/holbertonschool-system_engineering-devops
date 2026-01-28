@@ -1,0 +1,17 @@
+Diagram in the same directory.
+
+A user types www.foobar.com in its browser. 
+
+The browser check its own cache and the OS cache ; if no match is found, it asks the DNS for the IP matching the domain www.foobar.com, recorded in an A record in the right authoritative server. It finds it by following the DNS hierarchy : root server, TLD server, and then authoritative server.
+
+The browser saves the IP in its cache and the OS's cache and then queries the server at the right IP. A TCP connection is established.
+
+The server hosting the website is a physical machine and stores the Nginx (reverse proxy and web) server, the application server, and the database.
+
+The request from the client is received by the Nginx reverse proxy. If the request is about static content, the web server serves it. If the request is about data, the Nginx server sends the request to the application server. This application server will use the database in order to store or retrieve data.
+
+Weak point of the architecture : 
+- Security : no SSL – data are clear, no firewall
+- Cant scale up the system in case of high trafic
+- Server is down while maintenance
+- If the physical device crash, the website is down for good. 
