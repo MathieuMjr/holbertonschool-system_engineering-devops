@@ -1,0 +1,15 @@
+To the previous architectures, firewalls are added. Their role is to apply security policy and define authorized communications between the network zones by checking IPs, ports, protocols, and rate limits. Securing the internal network is necessary: if the proxy is compromised, nodes and DB are still protected with a firewall. 
+
+One is between the Internet and the proxy. Another is between the proxy and the nodes. A last one is between the master database and the nodes. 
+
+Another security step added to the infrastructure is the SSL certificate. 
+The client's browser asks for an SSL certificate from the proxy at the first connection. If the client browser accepts it, a secured and encrypted connection is established using a shared symmetric key to encrypt/decrypt data. 
+
+Finally, monitoring agents are added to each node and the master database server to check logs, errors, requests, and load. With monitoring, errors or dysfunctions can be investigated and solved, or, better, avoided. Data helps to decide if the infrastructure needs to be scaled up and adapted. 
+The monitoring agent is installed on the physical device and can access log files and information directly or through a special endpoint exposed on the localhost. 
+
+Weak points :
+The primary database is a bottleneck since all write operations go through a single node. 
+Only one writing database can slow down the system since the master database has to write and read data for both nodes. 
+SSL is necessary between nodes in case the internal network is compromised. 
+Having all components on the same server is a problem when it comes to security and scaling up ; you can't scale up a specific server, and if a server is compromised, all the components are reachable at once. 
