@@ -1,0 +1,9 @@
+In order to scale the infrastructure and reduce resource contention, the architecture is evolved by separating components and adding redundancy.
+
+A second load balancer is added and configured in a cluster with the first one to improve availability. The load balancers expose a single virtual IP to the clients and distribute incoming traffic to the backend servers. This setup can be configured in Active-Active mode, where both load balancers handle traffic simultaneously, or in Active-Passive mode, where one load balancer takes over if the other fails.
+
+Components are split so that each major role runs on its own physical or virtual server. Web servers (Nginx) are responsible for serving static content such as HTML, CSS, and JavaScript. Application servers host the backend code and handle business logic and API requests. The database is hosted on dedicated servers, with a primary MySQL server accepting all write operations and a replica database kept in sync for redundancy.
+
+This separation allows each component to scale independently. For example, additional web servers can be added without affecting the application or database layers. It also reduces resource contention, since CPU, memory, and disk usage are no longer shared by unrelated components on the same machine.
+
+However, this architecture still has limitations. The primary database remains a bottleneck because it is the only node capable of handling write operations. Additionally, although redundancy is improved, failures at the database or load balancer level can still impact the system if not further mitigated.
